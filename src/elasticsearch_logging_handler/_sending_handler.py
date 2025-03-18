@@ -1,9 +1,8 @@
-
 import sys
-from datetime import datetime
-from logging import Handler, LogRecord
 import threading
 import traceback as tb
+from datetime import datetime
+from logging import Handler, LogRecord
 
 import elasticsearch as es
 import elasticsearch.helpers as es_helpers
@@ -11,11 +10,15 @@ import pytz
 
 
 class ElasticSendingHandler(Handler):
-    def __init__(self, level,
-                 es_client: es.Elasticsearch, index: str,
-                 flush_period: float = 1,
-                 batch_size: int = 1000,
-                 timezone: str = None) -> None:
+    def __init__(
+        self,
+        level,
+        es_client: es.Elasticsearch,
+        index: str,
+        flush_period: float = 1,
+        batch_size: int = 1,
+        timezone: str = "Asia/Ho_Chi_Minh",
+    ) -> None:
         super().__init__(level=level)
 
         self._es_client = es_client
@@ -79,14 +82,15 @@ class ElasticSendingHandler(Handler):
 
         timestamp_iso = timestamp_dt.isoformat()
 
-        message = record.msg_object
+        message = record.msg
 
         action = {
-            '_index': self._index,
-            '_op_type': 'index',
-            '@timestamp': timestamp_iso,
-            'level': record.levelname,
-            'content': message
+            "_index": self._index,
+            "_op_type": "index",
+            "@timestamp": timestamp_iso,
+            "level": record.levelname,
+            "message": message,
+            "extra": record.__dict__.get("extra", {}),
         }
 
         return action
