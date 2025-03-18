@@ -11,7 +11,7 @@ Note:
 ## Installation
 
 ```
-gh clone NlpFisTeam/dinhanhx/python-elasticsearch-logging
+gh clone dinhanhx/python-elasticsearch-logging
 cd elasticsearch_logging_handler/
 pip install -e .
 ```
