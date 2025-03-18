@@ -4,6 +4,10 @@ This is a minimalistic Elasticsearch logging handler for python. This handler us
 
 Thanks `https://github.com/Mulanir/python-elasticsearch-logging`
 
+Note:
+- This handler doesn't create index in elasticsearch if there is not one.
+- This library doesn't come with an elasticsearch server or any script to start one.
+
 ## Installation
 
 ```
